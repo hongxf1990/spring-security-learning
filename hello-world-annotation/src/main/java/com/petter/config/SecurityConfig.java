@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 配置权限要求
+     * 采用注解方式，默认开启csrf
      * @param http
      * @throws Exception
      */
@@ -38,6 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-                .and().formLogin();
+             .and()
+                .formLogin().loginPage("/login")
+                .defaultSuccessUrl("/welcome").failureUrl("/login?error")
+                .usernameParameter("user-name").passwordParameter("pwd")
+            .and()
+                .logout().logoutSuccessUrl("/login?logout")
+            .and()
+                .csrf();
     }
 }
