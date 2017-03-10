@@ -2,12 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>admin</title>
 </head>
 <body>
     <h1 th:text="|标题: ${title}|">Title : XXX</h1>
     <h1 th:text="|信息: ${message}|">Message : XXX</h1>
+    <h2><a href="javascript:formSubmit()">Logout</a></h2>
 
+    <!-- csrf for logout-->
+    <form action="/logout" method="post" id="logoutForm">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </form>
+
+    <script>
+        function formSubmit() {
+            document.getElementById("logoutForm").submit();
+        }
+    </script>
 </body>
 </html>
