@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.petter"/>
+
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".html"/>
+    </bean>-->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML"/>
+        <property name="cacheable" value="false"/>
+        <!-- 解决中文乱码 -->
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+        <property name="additionalDialects">
+            <set>
+                <!-- Note the package would change to 'springsecurity3' if you are using that version -->
+                <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+            </set>
+        </property>
+    </bean>
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <!-- 解决中文乱码 -->
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+</beans>
