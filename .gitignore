@@ -18,4 +18,8 @@ Desktop.ini
 hs_err_pid*
 
 hello-world/target/
+hello-world/.idea/
 hello-world-annotation/target/
+hello-world-annotation/.idea/
+security-database/target/
+security-database/.idea/

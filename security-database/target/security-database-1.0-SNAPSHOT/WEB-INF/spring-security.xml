@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- use-expressions 允许使用表达式 -->
+    <security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
+        <!-- 拒绝访问页面 -->
+        <security:access-denied-handler error-page="/403"/>
+        <security:form-login
+                login-page="/login"
+                default-target-url="/welcome"
+                authentication-failure-url="/login?error"
+                username-parameter="user-name"
+                password-parameter="pwd"/>
+        <security:logout
+                logout-success-url="/login?logout"/>
+        <!-- XML 配置中默认csrf是关闭的，此处设置为打开
+            如果这里打开csrf，则在form表单中需要添加
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        -->
+        <security:csrf />
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="hongxf" password="123456" authorities="ROLE_USER" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="datasource"
+                                        users-by-username-query="select username,password, enabled from users where username=?"
+                                        authorities-by-username-query="select username, role from user_roles where username =?"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>
