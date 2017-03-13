@@ -21,7 +21,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!-- Loads Spring Security config file -->
+    <!-- Loads Spring config file -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>

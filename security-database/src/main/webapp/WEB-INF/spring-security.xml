@@ -26,17 +26,9 @@
 
     <security:authentication-manager>
         <security:authentication-provider>
-            <security:user-service>
-                <security:user name="hongxf" password="123456" authorities="ROLE_USER" />
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
-
-    <security:authentication-manager>
-        <security:authentication-provider>
             <security:jdbc-user-service data-source-ref="datasource"
-                                        users-by-username-query="select username,password, enabled from users where username=?"
-                                        authorities-by-username-query="select username, role from user_roles where username =?"/>
+                                        users-by-username-query="select username,password, enabled from users where username = ?"
+                                        authorities-by-username-query="select username, role from user_roles where username = ?"/>
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
