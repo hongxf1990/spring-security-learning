@@ -1,10 +1,15 @@
 package com.petter.config;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 /**
  * 相当于spring-security.xml中的配置
@@ -15,17 +20,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Resource
+    private DataSource dataSource;
 
-    /**
-     * 在内存中设置三个用户
-     * @param auth
-     * @throws Exception
-     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("hongxf").password("123456").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username,password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery("select username, role from user_roles where username = ?");
     }
 
     /**
@@ -37,14 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")//.access("hasRole('ROLE_ADMIN')")  //两种方式都可以
-                .antMatchers("/dba/**").hasAnyRole("ADMIN", "DBA")//.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-             .and()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/dba/**").hasAnyRole("ADMIN", "DBA")
+            .and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/welcome").failureUrl("/login?error")
                 .usernameParameter("user-name").passwordParameter("pwd")
             .and()
                 .logout().logoutSuccessUrl("/login?logout")
+            .and()
+                .exceptionHandling().accessDeniedPage("/403")
             .and()
                 .csrf();
     }

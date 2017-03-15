@@ -17,11 +17,19 @@
         验证用户的权限显示在这里
     </div>
 
-    <!-- 下面注释掉的两种写法是等价的 -->
     <div sec:authorize="hasRole('ROLE_ADMIN')">
+        This content is only shown to <b>administrators</b>.
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        This content is only shown to <b>users</b>.
+    </div>
+
+    <!-- 下面注释掉的两种写法是等价的，但是不起作用，暂时使用第三种方式 -->
+    <div sec:authorize="hasRole('ROLE_USER')">
     <!--<div sec:authorize="hasAuthority('ROLE_USER')">-->
-        <form action="/logout" method="post" id="logoutForm">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <!--<div th:if="${#strings.contains(#authentication.principal.authorities,'ROLE_USER')}">-->
+        <form th:action="@{/logout}" method="post" id="logoutForm">*
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
         </form>
 
         <h2><a href="javascript:formSubmit()">退出</a></h2>
@@ -32,6 +40,5 @@
             }
         </script>
     </div>
-
 </body>
 </html>

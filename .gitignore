@@ -23,3 +23,5 @@ hello-world-annotation/target/
 hello-world-annotation/.idea/
 security-database/target/
 security-database/.idea/
+security-database-annotation/target/
+security-database-annotation/.idea/

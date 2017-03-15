@@ -26,6 +26,7 @@
                 <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
             </set>
         </property>
+        <!--<property name="enableSpringELCompiler" value="true"/>-->
     </bean>
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine"/>
