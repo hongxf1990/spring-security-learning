@@ -27,3 +27,5 @@ security-database-annotation/target/
 security-database-annotation/.idea/
 security-limit-login-annotation/target/
 security-limit-login-annotation/.idea/
+security-remember-me-annotation/target/
+security-remember-me-annotation/.idea/
