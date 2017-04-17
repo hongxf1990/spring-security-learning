@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="security-hibernate-annotation:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="security-hibernate-annotation-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="security-hibernate-annotation:war exploded" />
-    </root>
-  </artifact>
-</component>
