@@ -33,8 +33,7 @@ public class AppConfig  {
     @Bean
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource());
-        builder
-                .scanPackages("com.petter.model")
+        builder.scanPackages("com.petter.model")
                 .addProperties(getHibernateProperties());
 
         return builder.buildSessionFactory();
@@ -51,7 +50,6 @@ public class AppConfig  {
 
     @Bean(name = "dataSource")
     public BasicDataSource dataSource() {
-
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUrl("jdbc:mysql://192.168.11.81:3306/security_learning_3");

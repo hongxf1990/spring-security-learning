@@ -9,7 +9,7 @@ import java.util.Set;
  * @since 2017-04-17 10:29
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     private String username;
     private String password;

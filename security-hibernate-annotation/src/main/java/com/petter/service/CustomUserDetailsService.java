@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 自定义的UserDetailsService用于查询数据库得到自己User后组装org.springframework.security.core.userdetails.User
- * 再交给security的验证程序
+ * security的验证过程会调用指定的UserDetailsService
+ * 自定义的UserDetailsService查询数据库得到自己User后
+ * 组装org.springframework.security.core.userdetails.User返回
  * @author hongxf
  * @since 2017-04-17 10:45
  */
