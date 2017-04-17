@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>403</title>
+</head>
+<body>
+<h1>HTTP Status 403 - Access is denied</h1>
+
+<div>
+    <h2 th:if="username eq null" th:text="您没有权限访问这个页面"></h2>
+    <h2 th:if="username ne null" th:text="|用户：${username}，您没有权限访问这个页面|"></h2>
+</div>
+</body>
+</html>
