@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -34,8 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService userDetailsService;
 
 
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        //return new CustomPasswordEncoder();
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
         auth.authenticationProvider(authenticationProvider);
     }
 
@@ -101,4 +110,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setTargetUrlParameter("targetUrl");
         return auth;
     }
+
 }
